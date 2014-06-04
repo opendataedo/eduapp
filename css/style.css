@@ -1,0 +1,124 @@
+body{
+	font-family:Verdana, Geneva, Arial, Helvetica, sans-serif;
+}
+li{
+	list-style:none;
+}
+
+#page{
+	width:70%;
+	margin: 0 auto;
+	-moz-box-sizing:border-box;
+}
+
+header, footer{
+	width:100%;
+	display:block;
+	clear:both;
+	background:grey;
+	-moz-box-sizing:border-box;
+}
+
+header nav h2.site_name{
+	width:38%;
+	float:left;
+	margin:1%;
+	padding:0;
+	-moz-box-sizing:border-box;
+}
+header nav ul{
+	margin:0;
+	padding:0;
+	width:20%;
+	float: right;
+	-moz-box-sizing:border-box;
+}
+
+header nav li{
+  margin: 12px 0px 6px 0px;
+  padding: 0px 6px 0px 6px;
+  float: left;
+  position: relative;
+  list-style: none;
+}
+
+header nav li a{
+  font-weight: bold;
+  font-family: arial;
+  font-style: normal;
+  font-size: 12px;
+  color: #E7E5E5;
+  text-decoration: none;
+  display: block;
+  padding: 6px;
+  margin: 0;
+  margin-bottom: 6px;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+ 
+}
+
+header nav li a:hover{
+	background:white;
+	color:#222;
+}
+
+aside{
+	width:27%;
+	float:left;
+	font-size:12px;
+}
+
+.main_content{
+	width:69%;
+	overflow: hidden;
+}
+dt{
+	width:70%;
+	margin: 15px 0;
+	padding: 5px 1%;
+	font-weight:bold;
+	background:grey;
+	cursor: pointer;
+}
+dd{
+	display:none;
+	margin: 0;
+}
+
+dd.default{
+	display:block;
+}
+
+footer p{
+	width:80%;
+	margin:10px auto;
+	padding:10px 0;
+	text-align: center;
+}
+
+footer a{
+	text-decoration:none;
+	font-size:13px;
+}
+.clearfix:after{
+	content:"";
+	width:100%;
+	height:0;
+	display:block;
+	clear:both;
+}
+
+#termsofuse li{
+	list-style:lower-roman;
+	margin-bottom: 10px;
+}
+
+div.hide{
+	display:none;
+}
+
+div#cont{
+	display:block;
+}

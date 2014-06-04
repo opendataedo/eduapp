@@ -1,0 +1,118 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<script type="text/javascript" src="js/jquery.js"></script>
+		<script src="http://code.highcharts.com/highcharts.js"></script>
+		<script src="http://code.highcharts.com/highcharts-more.js"></script>
+		<script src="http://code.highcharts.com/modules/exporting.js"></script>
+		<script>
+			$(function () {
+			    var lgaArray = [];
+			    var unesco = [];
+			    var school = [];
+			
+			    $.ajax({
+			        url: "http://www.json-generator.com/j/bYOgRKBShu?indent=4",
+			        dataType: "JSON"
+			    }).done(function (data) {
+			        $.each(data, function () {
+			            ro = [this.schoolName];
+			            row = [this.schoolName, 50];
+			            rows = [this.id, Math.round(this.teachersToPupilsRatio), Math.round(this.teachersToPupilsRatio)];
+			            lgaArray.push(rows);
+			            unesco.push(row);
+			            school.push(ro);			        
+			        });
+			        
+			        alert(unesco.join(" "));
+			
+			        $('#container').highcharts({
+			
+			            chart: {
+			                zoomType: 'xy'
+			            },
+			            xAxis: {
+			                //categories: school
+			            },
+			            yAxis: [{ // Primary yAxis
+			                gridLineWidth: 0,
+			                labels: {
+			                    format: '{value}',
+			                    style: {
+			                        color: Highcharts.getOptions().colors[2]
+			                    }
+			                },
+			                title: {
+			                    text: 'Teacher Pupils Ratio',
+			                    style: {
+			                        color: Highcharts.getOptions().colors[2]
+			                    }
+			                },
+			                opposite: true,
+			                
+			
+			
+			            }, { // Secondary yAxis
+			                gridLineWidth: 0,
+			                title: {
+			                    text: 'UNESCO Standard',
+			                    style: {
+			                        color: Highcharts.getOptions().colors[0]
+			                    }
+			                },
+			                labels: {
+			                    format: '{value}',
+			                    style: {
+			                        color: Highcharts.getOptions().colors[0]
+			                    }
+			                }
+			
+			            }],
+			
+			            title: {
+			                text: 'Teacher Pupils Ratio Compared to UNESCO Standard'
+			            },
+			            
+			            tooltip: {
+			                    formatter: function () {
+			                        return 'School ID:'+this.x+'<br>Teacher Pupils Ratio:'+Math.round(this.y);
+			                    }
+			                },
+			
+			            series: [{
+			                name: 'UNESCO Standard',
+			                type: 'spline',
+			                data: unesco
+			            }, {
+			                name: 'Teachers Pupils Ratio',
+			                type: 'bubble',
+			                data: lgaArray,
+			                tooltip: {
+			                    valueSuffix: ' mm'
+			                }
+			
+			            }, ]
+			
+			        });
+			    });
+			
+			
+			
+			});
+		</script>
+		<title> Ok Titles</title>
+	</head>
+	
+	<body>
+		<div id="container" style="height: 400px; min-width: 310px; max-width: 600px; margin: 0 auto"></div>
+	</body>
+</html>
+
+
+
+
+
+
+
+
+

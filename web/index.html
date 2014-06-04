@@ -1,0 +1,318 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>Edo State EduApp</title>
+        <link rel="stylesheet" href="css/style.css"/>
+        <script type="text/javascript" src="js/jquery.js"></script>
+        <script src="http://code.highcharts.com/highcharts.js"></script>
+		<script src="http://code.highcharts.com/highcharts-more.js"></script>
+		<script src="http://code.highcharts.com/modules/exporting.js"></script>
+		 <script type="text/javascript" src="js/custom.js"></script>
+		 <script>
+		 		
+		 		function tc_ratio(year){
+		 			$('#content').html("<p><img src=\"images/load.gif\" /></p>");
+			 		var lgaArray = [];
+				    var unesco = [];
+				    var school = [];
+				
+				    $.ajax({
+				        url: "http://www.json-generator.com/j/bYOgRKBShu?indent=4",
+				        dataType: "JSON"
+				    }).done(function (data) {
+				        $.each(data, function () {
+				            ro = [this.schoolName];
+				            row = [this.schoolName, 50];
+				            rows = [this.id, Math.round(this.teachersToPupilsRatio), Math.round(this.teachersToPupilsRatio)];
+				            lgaArray.push(rows);
+				            unesco.push(row);
+				            school.push(ro);			        
+				        });
+				        
+				        //alert(unesco.join(" "));
+						
+				        $('#content').highcharts({
+				
+				            chart: {
+				                zoomType: 'xy'
+				            },
+				            xAxis: {
+				                //categories: school
+				            },
+				            yAxis: [{ // Primary yAxis
+				                gridLineWidth: 0,
+				                labels: {
+				                    format: '{value}',
+				                    style: {
+				                        color: Highcharts.getOptions().colors[2]
+				                    }
+				                },
+				                title: {
+				                    text: 'Teacher Pupils Ratio',
+				                    style: {
+				                        color: Highcharts.getOptions().colors[2]
+				                    }
+				                },
+				                opposite: true,
+				                
+				
+				
+				            }, { // Secondary yAxis
+				                gridLineWidth: 0,
+				                title: {
+				                    text: 'UNESCO Standard',
+				                    style: {
+				                        color: Highcharts.getOptions().colors[0]
+				                    }
+				                },
+				                labels: {
+				                    format: '{value}',
+				                    style: {
+				                        color: Highcharts.getOptions().colors[0]
+				                    }
+				                }
+				
+				            }],
+				
+				            title: {
+				                text: 'Teacher Pupils Ratio Compared to UNESCO Standard'
+				            },
+				            
+				            tooltip: {
+				                    formatter: function () {
+				                        return 'School ID:'+this.x+'<br>Teacher Pupils Ratio:'+Math.round(this.y);
+				                    }
+				                },
+				
+				            series: [{
+				                name: 'UNESCO Standard',
+				                type: 'spline',
+				                data: unesco
+				            }, {
+				                name: 'Teachers Pupils Ratio',
+				                type: 'bubble',
+				                data: lgaArray,
+				                				
+				            }, ]
+			
+			        });
+			        
+			        setTimeout(function() {
+						  var circle = $('circle');
+							$.each(circle, function(){
+								var color = '#'+(Math.random()*0xFFFFFF<<0).toString(16);    
+								$(this).attr('fill', color);
+							});	
+						}, 1000);
+						
+						 var analysis = "<p>Real analysis comes here</p>";
+						    $('.analysis').html(analysis);
+						 });			   
+		 	}
+		 		
+		 		function passrate(year){
+		 			$('#content').html("<p><img src=\"images/load.gif\" /></p>");
+		 			var idArray = [];
+				    var lgaArray = [];
+				    var passRateArray = [];
+				    var tpRatioArray = [];
+				    var unescoArray = [];
+				
+				    $.ajax({
+				        url: "http://www.json-generator.com/j/bIYNLrxtVe?indent=4",
+				        dataType: "JSON"
+				    }).done(function (data) {
+				        $.each(data, function () {
+				
+				            id = [this.id];
+				            lga = [this.lgaName];
+				            passrate = [Math.round(this.passRate)];
+				            tpratio = [Math.round(this.teacherPupilsRatio)];
+				            unesco = [50];
+				
+				            idArray.push(id);
+				            lgaArray.push("ABC");
+				            passRateArray.push(passrate);
+				            tpRatioArray.push(tpratio);
+				            unescoArray.push(unesco);
+				
+				        });
+				       				
+				        $('#content').highcharts({
+				            title: {
+				                text: 'Students Pass Rates and Teachers Pupils Ratio Per LGA',
+				                x: -20 //center
+				            },
+				
+				            subtitle: {
+				                text: 'Source: Where una dey get this data from?',
+				                x: -20
+				            },
+				
+				            tooltip: {
+				                backgroundColor: {
+				                    linearGradient: [0, 0, 0, 60],
+				                    stops: [
+				                        [0, '#FFFFFF'],
+				                        [1, '#E0E0E0']
+				                    ]
+				                },
+				                borderWidth: 1,
+				                borderColor: '#AAA'
+				            },
+				
+				            xAxis: {
+				            	title: {
+				                    text: 'Local Government Areas'
+				                },
+				                categories: lgaArray,
+				                tickInterval: 1
+				            },
+				            yAxis: [{ //--- Primary yAxis
+				                title: {
+				                    text: 'Students Pass Rate'
+				                },
+				                tickInterval: 5,
+				            }, { //--- Secondary yAxis
+				                title: {
+				                    text: 'Teacher Pupils Rato'
+				                },
+				                opposite: true
+				            }],
+				
+				            series: [{
+				                name: 'Students Pass Rate',
+				                data: passRateArray,
+				            }, {
+				                name: 'Teacher Pupils Rato',
+				                data: tpRatioArray,
+				            }, {
+				            	name: 'UNESCO Standard',
+				            	data: unescoArray,
+				            }]
+				        });
+		  
+						var analysis = "<p>Real analysis comes here</p>";
+					    $('.analysis').html(analysis);
+				    });
+
+		 		}
+		 
+		 		tc_ratio(2001);
+		 </script>
+        
+                
+    </head>
+    <body>
+	    <div id="page" class="clearfix">
+	    	<header>
+		    	<nav class="clearfix">
+		    		<h2 class="site_name">Edo State EduApp</h2>
+		    		<ul class="menu">
+		    			<li><a href="#" class="faq">FAQs</a></li>
+		    			<li><a href="#" class="about">About</a></li>
+		    			<li><a href="#" class="feedback">Feedback</a></li>
+		    		</ul>
+		    	</nav>
+		    </header>
+	        <aside>
+	        	<dl>
+	        			<dt id="t_s_ratio" onclick="tc_ratio(2000)">Teacher Student Ratio</dt>
+			        	<dd class="default">
+				        	<ul class="">
+				        		<li><input type="radio" name="tsratio" id="tsratio" checked="checked"/><span><label for="pass_rate">Teacher Student Ratio</label></span></li>
+				        		
+				        	</ul>
+				        </dd>
+				        
+				        <dt id="s_performance" onclick="passrate()">Student Performance</dt>
+			        	<dd class="">
+				        	<ul class="">
+				        		<li><input type="radio" name="std_performance" id="pass_rate" checked="checked"/><span><label for="pass_rate">Student Pass Rate</label></span></li>
+				        		<li><input type="radio" name="std_performance" id="dropout_rate"/><span><label for="dropout_rate">Dropout and Repeat Rate</label></span></li>
+				        	</ul>
+				        </dd>
+				        
+				        
+			        	<dt class="location">Distribution of Schools</dt>
+			        	<dd class="">			        	
+				        	<ul class="dofschools">
+				        		<li><input type="radio" name="dofsch" checked="checked" id="private"/><span><label for="private">Private Schools</label></span></li>
+				        		<li><input type="radio" name="dofsch" id="public"/><span><label for="public">Public Schools</label></span></li>
+				        		<li><input type="radio" name="dofsch" id="primary"/><span><label for="primary">Primary Schools</label></span></li>
+				        		<li><input type="radio" name="dofsch" id="junior"/><span><label for="junior">Junior Secondary Schools</label></span></li>
+				        		<li><input type="radio" name="dofsch" id="senior"/><span><label for="senior">Senior Secondary Schools</label></span></li>
+				        	</ul>
+			        	</dd> 
+			        
+			      
+			        	<dt class="infra">Government Investment in Education</dt>
+			        	<dd>
+				        	<ul class="investment">
+				        		<li><input type="radio" name="g_inv_edu" id="renovated" checked="checked"/><span><label for="renovated">Renovated and -- Schools</label></span></li>
+				        		<li><input type="radio" name="g_inv_edu" id="budget" /><span><label for="budget">Budget Allocation in Education</label></span></li>
+				        		<li><input type="radio" name="g_inv_edu" id="spending" /><span><label for="spending">Government Spending in Education</label></span></li>
+				        		<li><input type="radio" name="g_inv_edu" id="projects" /><span><label for="projects">Government Projects in Education</label></span></li>
+				        	</ul>				        	
+				        </dd>
+			       
+			        
+			      
+			        	<dt>Student Distrubtion</dt>
+			        	<dd>
+				        	<ul class="">
+				        		<li><input type="radio" name="std_distribution" id="nostudents" checked="checked"/><span><label for="nostudents">Total Number of Students</label></span></li>
+				        		<li><input type="radio" name="std_distribution" id="male"/><span><label for="male">Number of Male Students</label></span></li>
+				        		<li><input type="radio" name="std_distribution" id="female"/><span><label for="female">Number of Female Students</label></span></li>
+				        		<li><input type="radio" name="std_distribution" id="age_distri"/><span><label for="age_distri">Age Distribution</label></span></li>
+				        		<li><input type="radio" name="std_distribution" id="mtof"/><span><label for="mtof">Male to Female Ratio</label></span></li>
+				        	</ul>
+
+				        </dd>
+			        
+			        
+			      
+			        	<dt>Staff Distribution</dt>
+			        	<dd>
+				        	<ul class="">
+				        		<li><input type="radio" name="stf_distribution" id="noteachers" checked="checked"/><span><label for="noteachers">Number of Teachers</label></span></li>
+				        		<li><input type="radio" name="stf_distribution" id="male_teachers"/><span><label for="male_teachers">Male Teachers</label></span></li>
+				        		<li><input type="radio" name="stf_distribution" id="female_teachers"/><span><label for="female_teachers">Female Teachers</label></span></li>
+				        		<li><input type="radio" name="stf_distribution" id="lga_teachers"/><span><label for="lga_teachers">Teachers Per LGA</label></span></li>
+				        		<li><input type="radio" name="stf_distribution" id="schl_teachers"/><span><label for="schl_teachers">Teachers Per School</label></span></li>
+				        	</ul
+			        	</dd>
+			        
+			        
+			        	
+				        <dt>Infrastructure</dt>
+			        	<dd>
+				        	<ul class="">
+				        		<li><input type="radio" name="infrastructure" id="class_to_std" checked="checked"/><span><label for="class_to_std">Number of Classrooms to Students</label></span></li>
+				        		<li><input type="radio" name="infrastructure" id="labs"/><span><label for="lab">Computer Labs in Schools</label></span></li>
+				        		<li><input type="radio" name="infrastructure" id="libraries"/><span><label for="libraries">Computer Labs in Schools</label></span></li>
+				        	</ul>
+				        </dd>
+				        
+				        
+			       
+			       </dl>
+			</aside>	        
+	        <div class="main_content clearfix">
+	        	<!-- <h2 class="dispay_title">New Web Project Page</h2> --->
+	        	<div id="cont_wrap" class="">
+	        		<div id="content"></div>
+	        		<h3>Analysis</h3>
+	        		<div class="analysis"></div>
+	        	</div>
+	        	
+	        </div>
+	        <footer><p>Copyright and Other Information &nbsp;&nbsp; <a href="#" class="touse">Terms of Use</a>
+		    		&nbsp;&nbsp;<a href="#" class="pstatement">Privacy Statement</a></p>
+	        	
+	        </footer>
+        </div>
+    </body>
+</html>
